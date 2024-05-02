@@ -1,0 +1,17 @@
+services:
+  terraform:
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - ./terraform:/terraform
+      - ${APPDATA}/gcloud:/root/.config/gcloud
+    command: >
+      bash -c "cd terraform/
+      && terraform init
+      && terraform apply -auto-approve"
+    environment:
+      - TF_VAR_GCP_PROJECT=myprojectid
+      - TF_VAR_DISCORD_TOKEN=mydiscordtoken
+      - TF_VAR_GCP_REGION=us-central1
+      - TF_VAR_GCP_ZONE=us-central1-a
+    
